@@ -2,12 +2,6 @@ pipeline {
     agent any
 
     stages {
-        stage('Clone') {
-            steps {
-                git 'https://github.com/bhawna930/jenkins_test.git'
-            }
-        }
-
         stage('Install Dependencies') {
             steps {
                 bat 'npm install'
