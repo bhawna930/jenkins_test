@@ -2,6 +2,7 @@ pipeline {
     agent any
 
     stages {
+
         stage('Install Dependencies') {
             steps {
                 bat 'npm install'
@@ -22,6 +23,18 @@ pipeline {
                 docker run -d -p 3000:3000 --name my-app bhawna930/jenkin_test
                 '''
             }
+        }
+    }
+
+    post {
+        always {
+            echo 'Pipeline finished'
+        }
+        success {
+            echo 'App deployed successfully 🚀'
+        }
+        failure {
+            echo 'Pipeline failed ❌'
         }
     }
 }
