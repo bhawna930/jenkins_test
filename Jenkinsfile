@@ -2,7 +2,6 @@ pipeline {
     agent any
 
     stages {
-
         stage('Install Dependencies') {
             steps {
                 bat 'npm install'
@@ -15,11 +14,18 @@ pipeline {
             }
         }
 
+        stage('Stop Old Container (if exists)') {
+            steps {
+                bat 'docker stop my-app 2>nul || exit 0'
+                bat 'docker rm my-app 2>nul || exit 0'
+            }
+        }
+
         stage('Run Container') {
-    steps {
-        bat 'docker run -d -p 3000:3000 --name my-app bhawna930/jenkin_test'
-    }
-}
+            steps {
+                bat 'docker run -d -p 3000:3000 --name my-app bhawna930/jenkin_test'
+            }
+        }
     }
 
     post {
@@ -28,9 +34,6 @@ pipeline {
         }
         success {
             echo 'App deployed successfully 🚀'
-        }
-        failure {
-            echo 'Pipeline failed ❌'
         }
     }
 }
