@@ -16,14 +16,10 @@ pipeline {
         }
 
         stage('Run Container') {
-            steps {
-                bat '''
-                docker stop my-app || exit 0
-                docker rm my-app || exit 0
-                docker run -d -p 3000:3000 --name my-app bhawna930/jenkin_test
-                '''
-            }
-        }
+    steps {
+        bat 'docker run -d -p 3000:3000 --name my-app bhawna930/jenkin_test'
+    }
+}
     }
 
     post {
